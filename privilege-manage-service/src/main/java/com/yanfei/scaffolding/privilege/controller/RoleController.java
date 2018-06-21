@@ -1,8 +1,11 @@
 package com.yanfei.scaffolding.privilege.controller;
 
-import com.yanfei.scaffolding.privilege.dao.TbPrivilegeRoleMapper;
-import com.yanfei.scaffolding.privilege.entity.TbPrivilegeRole;
+import com.yanfei.scaffolding.privilege.request.RoleRequest;
+import com.yanfei.scaffolding.privilege.response.Page;
+import com.yanfei.scaffolding.privilege.response.ResponseData;
+import com.yanfei.scaffolding.privilege.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,13 +19,30 @@ import org.springframework.web.bind.annotation.RestController;
 public class RoleController {
 
     @Autowired
-    private TbPrivilegeRoleMapper tbPrivilegeRoleMapper;
+    private RoleService roleService;
 
-    @RequestMapping(value = "/test", method = RequestMethod.POST)
-    public String test(){
-        TbPrivilegeRole tbPrisvilegeRole = tbPrivilegeRoleMapper.selectByPrimaryKey(4);
-        System.out.println(tbPrisvilegeRole);
-        return "aaa";
+    @RequestMapping(value = "/list", method = RequestMethod.POST)
+    public ResponseData<Page> roleList(@RequestBody RoleRequest roleRequest){
+        Page page = roleService.getRoleList(roleRequest.getRoleName(), roleRequest.getPage());
+        return ResponseData.OK(page);
+    }
+
+    @RequestMapping(value = "/add", method = RequestMethod.POST)
+    public ResponseData addRole(@RequestBody RoleRequest roleRequest){
+        ResponseData responseData = roleService.addRole(roleRequest.getRoleName(), roleRequest.getRemark());
+        return responseData;
+    }
+
+    @RequestMapping(value = "/edit", method = RequestMethod.POST)
+    public ResponseData editRole(@RequestBody RoleRequest roleRequest){
+        ResponseData responseData = roleService.editRole(roleRequest.getId(), roleRequest.getRoleName(), roleRequest.getRemark());
+        return responseData;
+    }
+
+    @RequestMapping(value = "/delete", method = RequestMethod.POST)
+    public ResponseData deleteRole(@RequestBody RoleRequest roleRequest){
+        ResponseData responseData = roleService.deleteRole(roleRequest.getId());
+        return responseData;
     }
 
 }

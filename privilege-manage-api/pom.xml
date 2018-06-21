@@ -12,5 +12,14 @@
   <!-- FIXME change it to the project's website -->
   <url>http://www.example.com</url>
 
+  <dependencies>
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <version>1.18.0</version>
+      <scope>provided</scope>
+    </dependency>
+  </dependencies>
+
 
 </project>
