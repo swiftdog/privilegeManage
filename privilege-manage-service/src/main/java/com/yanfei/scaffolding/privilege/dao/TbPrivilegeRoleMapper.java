@@ -2,6 +2,7 @@ package com.yanfei.scaffolding.privilege.dao;
 
 import com.yanfei.scaffolding.privilege.entity.TbPrivilegeRole;
 import com.yanfei.scaffolding.privilege.response.Page;
+import com.yanfei.scaffolding.privilege.response.RoleListResp;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
@@ -28,7 +29,7 @@ public interface TbPrivilegeRoleMapper {
 
     int countRoleList(@Param("roleName") String roleName);
 
-    List<TbPrivilegeRole> getRoleList(@Param("roleName") String roleName, @Param("page") Page page);
+    List<RoleListResp> getRoleList(@Param("roleName") String roleName, @Param("page") Page page);
 
     @Select("select count(*) from tb_privilege_role where role_name = #{roleName}")
     int countRoleByName(@Param("roleName") String roleName);

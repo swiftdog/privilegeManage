@@ -11,8 +11,10 @@
     </where>
   </select>
 
-  <select id="getRoleList" resultMap="BaseResultMap">
-    select * from tb_privilege_role
+  <select id="getRoleList" resultType="com.yanfei.scaffolding.privilege.response.RoleListResp">
+    select R.id,R.role_name 'roleName',R.remark,
+    (select count(*) from tb_privilege_user_role where role_id = R.id) 'userCount'
+    from tb_privilege_role R
     <where>
       <if test="roleName != null and roleName != ''">
         role_name like concat('%',#{roleName},'%')
